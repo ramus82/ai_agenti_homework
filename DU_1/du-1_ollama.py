@@ -3,9 +3,15 @@ from pprint import pprint
 
 client = Client(host="http://localhost:11434")
 
-response = client.embed(
+
+
+messages = [
+    {"role": "user", "content": "Tell me a joke."}
+]
+
+response = client.chat(
     model="llama3.2",
-    input="Tell me a joke.",
+    messages = messages
 )
 
 print("--- Full response: ---")
