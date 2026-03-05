@@ -1,0 +1,117 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -16,
+        -48
+      ],
+      "id": "2907cf1e-8a84-40f3-a51f-525d3b24d98a",
+      "name": "When chat message received",
+      "webhookId": "6bf50847-5c11-4a33-8d7a-0c036ab3e1d7"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        -48
+      ],
+      "id": "34d5fbf6-580a-428c-883b-5bfd6d4b6c9c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-haiku-4-5-20251001",
+          "mode": "list",
+          "cachedResultName": "Claude Haiku 4.5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        176
+      ],
+      "id": "953c66e7-f44c-4b56-84fa-a60c1f05bfc5",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "Bu3emhHaYKXSztrT",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        176
+      ],
+      "id": "278de15a-6884-4b5d-8650-407e104ea973",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "f646bbf7-1b0b-412c-bd74-4761c4cdf9a5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "326d11a392d4cc6359f59b0b7bc62b87af0acde707d8a3eee15639f264d1ead9"
+  },
+  "id": "0O5JNWH-askhcdgHeuHLC",
+  "tags": []
+}

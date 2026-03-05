@@ -1,7 +1,7 @@
 # Repository for homework - AI Agents Course
 
 [X] Lekce 1 - Python script, ktery vola LLM API
-[ ] Lekce 4 - Agent na "No Code" platforme
+[X] Lekce 4 - Agent na "No Code" platforme
 [ ] Lekce 8 - Agent pracující s nástroji
 
 ## Zadani DU - Lekce 1
