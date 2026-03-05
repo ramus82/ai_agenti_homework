@@ -7,13 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-"""
 client = anthropic.Anthropic(
     api_key=os.environ.get("ANTHROPIC_API_KEY")
 )
-"""
-client = anthropic.Anthropic(api_key="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")
-
 
 # ── Tool definitions (what the model "sees") ──────────────────────────────────
 tools = [
