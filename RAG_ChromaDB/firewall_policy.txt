@@ -1,0 +1,29 @@
+FIREWALL POLICY DOCUMENT
+Version: 2.1 | Classification: Internal | Last Updated: 2024-01-15
+
+SECTION 1 - GENERAL REQUIREMENTS
+All network perimeter firewalls must be configured in accordance with CIS Benchmark Level 2 and DISA STIG guidelines. Default deny policy must be applied on all interfaces. Firewall rule sets must be reviewed and approved by the security team before deployment. All changes to firewall rules must go through the change management process.
+
+SECTION 2 - BLOCKED PORTS AND PROTOCOLS
+The following ports must be blocked on all perimeter firewalls by default:
+- Port 22 (SSH) must be blocked from external networks. Internal SSH access is permitted only from the jump server subnet (10.10.1.0/24).
+- Port 23 (Telnet) must be blocked on all interfaces without exception. Telnet is a prohibited protocol.
+- Port 135, 137, 138, 139, 445 (NetBIOS/SMB) must be blocked on all perimeter interfaces.
+- Port 3389 (RDP) must be blocked from external networks. Internal RDP is permitted only from the management VLAN.
+- Port 161, 162 (SNMP) must be blocked from external networks. SNMPv3 is the only permitted version internally.
+- Ports 1433, 3306, 5432 (database ports) must never be exposed to external networks.
+
+SECTION 3 - ALLOWED TRAFFIC
+Inbound traffic permitted on perimeter firewalls:
+- Port 443 (HTTPS) is permitted from any source to the DMZ web servers only.
+- Port 80 (HTTP) is permitted only for redirect to HTTPS. Direct HTTP access to applications is prohibited.
+- ICMP echo-request is permitted from the monitoring subnet (10.10.5.0/24) only.
+
+SECTION 4 - LOGGING REQUIREMENTS
+All firewall deny events must be logged. Logs must be forwarded to the central SIEM in real time. Log retention must be a minimum of 365 days. Firewall logs must include source IP, destination IP, source port, destination port, protocol, action, and timestamp. Log integrity must be ensured via cryptographic hashing.
+
+SECTION 5 - RULE REVIEW AND CLEANUP
+Firewall rules must be reviewed every 90 days. Unused rules (no hits in 90 days) must be flagged for removal. Temporary rules must have an expiration date set at creation. Shadow rules and redundant rules must be identified and removed during quarterly reviews.
+
+SECTION 6 - HIGH AVAILABILITY
+Perimeter firewalls must be deployed in active-passive HA pairs. Failover time must not exceed 30 seconds. HA synchronization traffic must use a dedicated out-of-band interface. HA configuration must be tested every 6 months.

@@ -1,0 +1,45 @@
+CIS BENCHMARK NOTES - WINDOWS SERVER 2022
+Reference: CIS Microsoft Windows Server 2022 Benchmark v1.0.0
+Classification: Internal Audit Reference
+
+SECTION 1 - ACCOUNT POLICIES (CIS 1.x)
+CIS 1.1.1 - Password History: Set to 24 or more passwords remembered. Audit command: secedit /export /cfg output.cfg, check PasswordHistorySize.
+CIS 1.1.2 - Maximum Password Age: Must be 365 days or fewer. Recommended value: 90 days for standard users, 60 days for admins.
+CIS 1.1.3 - Minimum Password Age: Set to 1 or more days to prevent immediate password cycling.
+CIS 1.1.4 - Minimum Password Length: Set to 14 or more characters. Windows Server 2022 supports passphrases up to 256 characters.
+CIS 1.1.5 - Password Complexity: Must be enabled. Enforces uppercase, lowercase, number, and special character requirements.
+CIS 1.2.1 - Account Lockout Duration: Set to 15 minutes or greater.
+CIS 1.2.2 - Account Lockout Threshold: Set to 5 or fewer invalid attempts. Recommended: 3 attempts.
+CIS 1.2.3 - Reset Account Lockout Counter: Set to 15 minutes or greater.
+
+SECTION 2 - LOCAL POLICIES - AUDIT POLICY (CIS 17.x)
+CIS 17.1.1 - Audit Credential Validation: Configure to log Success and Failure events.
+CIS 17.2.1 - Audit Application Group Management: Configure to log Success and Failure.
+CIS 17.5.1 - Audit Account Lockout: Configure to log Failure events.
+CIS 17.5.2 - Audit Logon: Configure to log Success and Failure events.
+CIS 17.6.1 - Audit Audit Policy Change: Configure to log Success and Failure events.
+CIS 17.9.1 - Audit IPsec Driver: Configure to log Success and Failure events.
+CIS 17.9.5 - Audit Security System Extension: Configure to log Success and Failure events.
+Audit command: auditpol /get /category:* to verify all audit settings.
+
+SECTION 3 - WINDOWS FIREWALL (CIS 9.x)
+CIS 9.1.1 - Domain Profile State: Ensure Windows Firewall is enabled for Domain profile.
+CIS 9.1.2 - Domain Profile Inbound Connections: Set to block inbound connections by default.
+CIS 9.1.3 - Domain Profile Outbound Connections: Set to allow outbound connections by default.
+CIS 9.2.1 - Private Profile State: Ensure Windows Firewall is enabled for Private profile.
+CIS 9.3.1 - Public Profile State: Ensure Windows Firewall is enabled for Public profile.
+CIS 9.3.2 - Public Profile Inbound: Set to block and do not allow user override.
+Audit command: netsh advfirewall show allprofiles
+
+SECTION 4 - REMOTE SERVICES (CIS 18.x)
+CIS 18.3.3 - Configure SMB v1 client: Ensure SMBv1 client driver is disabled.
+CIS 18.3.4 - Configure SMB v1 server: Ensure SMBv1 server is disabled.
+Disable SMBv1 command: Set-SmbServerConfiguration -EnableSMB1Protocol $false
+CIS 18.4.3 - MSS AutoAdminLogon: Ensure disabled to prevent automatic logon.
+CIS 18.9.8 - Remote Desktop Services: Ensure RDP connection encryption is set to High level.
+RDP encryption audit: Check HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp MinEncryptionLevel = 3.
+
+SECTION 5 - SYSTEM SERVICES
+The following services must be disabled if not required: Bluetooth Support Service, Computer Browser, Remote Registry, Routing and Remote Access, SSDP Discovery, UPnP Device Host, Xbox Live services (all).
+Audit disabled services: Get-Service | Where-Object {$_.StartType -eq 'Disabled'} | Select-Object Name,Status
+Critical services that must be running: Windows Defender Antivirus, Windows Event Log, Windows Firewall, Windows Update.

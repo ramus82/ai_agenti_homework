@@ -1,0 +1,20 @@
+ACCESS CONTROL POLICY
+Version: 3.0 | Classification: Internal | Last Updated: 2024-02-01
+
+SECTION 1 - ACCOUNT MANAGEMENT
+All user accounts must be created through the official provisioning process with written approval from the line manager and IT security. Accounts must follow the naming convention: firstname.lastname@domain.com. Generic or shared accounts are prohibited except for service accounts, which require documented justification and approval. User accounts must be reviewed every 90 days to verify continued need.
+
+SECTION 2 - PASSWORD POLICY
+Passwords must be a minimum of 14 characters. Passwords must contain at least one uppercase letter, one lowercase letter, one number, and one special character. Password history must enforce the last 24 passwords. Passwords must be rotated every 90 days for standard users and every 60 days for privileged accounts. Passwords must never be stored in plaintext. All passwords must be stored using bcrypt or Argon2 hashing. Default passwords on all systems must be changed immediately upon deployment.
+
+SECTION 3 - PRIVILEGED ACCESS
+Privileged accounts (Domain Admin, root, local admin) must never be used for day-to-day tasks. Administrators must have two separate accounts: a standard account for daily use and a privileged account for administrative tasks. Privileged access must be granted using the principle of least privilege. Privileged Access Workstations (PAWs) must be used when performing sensitive administrative tasks. All privileged sessions must be recorded and stored for a minimum of 180 days.
+
+SECTION 4 - MULTI-FACTOR AUTHENTICATION
+MFA is mandatory for all remote access, VPN connections, and cloud service access. MFA is mandatory for all privileged accounts regardless of access location. Acceptable MFA methods: hardware tokens (FIDO2), authenticator apps (TOTP). SMS-based MFA is not permitted due to SIM-swapping risks. MFA bypass procedures must be documented and require security team approval.
+
+SECTION 5 - ACCOUNT TERMINATION
+User accounts must be disabled within 2 hours of employment termination. Account data must be preserved for 30 days post-termination before deletion. Access to all systems must be revoked simultaneously upon termination. Termination checklist must be completed and signed off by HR and IT security. Service accounts associated with a departing employee must be reassigned or disabled.
+
+SECTION 6 - SESSION MANAGEMENT
+Inactive sessions must time out after 15 minutes on workstations and 5 minutes on privileged systems. Session tokens must be invalidated upon logout. Concurrent session limits must be enforced: maximum 2 sessions for standard users, 1 session for privileged accounts. Remote sessions must use encrypted protocols only (TLS 1.2 minimum, TLS 1.3 preferred).
