@@ -8,3 +8,4 @@ def decode_image(encoded_string, output_path):
     with open(output_path, "wb") as output_file:
         output_file.write(base64.b64decode(encoded_string)) 
 
+TBD
