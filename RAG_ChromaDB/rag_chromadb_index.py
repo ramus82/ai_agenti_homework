@@ -1,10 +1,6 @@
-import os
 import chromadb
 from chromadb.utils import embedding_functions
-from anthropic import Anthropic
-from dotenv import load_dotenv
-
-load_dotenv()
+import parsers
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
 chroma  = chromadb.PersistentClient(path="./chroma_db")
@@ -16,9 +12,6 @@ collection = chroma.get_or_create_collection(
     embedding_function=embedder
 )
 
-""" claude = Anthropic(
-    api_key=os.environ.get("ANTHROPIC_API_KEY")
-) """
 
 # ── 1. Chunking ───────────────────────────────────────────────────────────────
 def chunk_text(text, source, chunk_size=100, overlap=20):
@@ -40,9 +33,6 @@ def index_document(filepath):
     collection.add(documents=chunks, ids=ids, metadatas=metas)
     print(f"Indexed {len(chunks)} chunks from {filepath}")
 
-# ── 3. Retrieve + Ask ─────────────────────────────────────────────────────────
-def ask(question, top_k=3):
-    pass
 
 # ── Demo ──────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
@@ -52,9 +42,3 @@ if __name__ == "__main__":
     index_document("cis_benchmark_notes.txt")
     index_document("vulnerability_mgmt.txt")
 
-    """ # Then query freely
-    print(ask("What ports must be blocked on perimeter firewalls?"))
-    print(ask("What is the password rotation policy?"))
-    print(ask("Which CIS controls apply to SSH hardening?"))
-    """
-    
